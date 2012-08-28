@@ -1,0 +1,22 @@
+﻿@model IEnumerable<mvc_MilesTracker.Models.Auto>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DisplayAuto</title>
+</head>
+<body>
+    <div>
+    @foreach (mvc_MilesTracker.Models.Auto item in ViewData.Model)
+    {
+        @item.AutoName <br />
+    }
+    </div>
+</body>
+</html>
