@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddGas</title>
+</head>
+<body>
+    <div>
+       <label id="RetrunValue" name="RetrunValue">@ViewBag.Model</label>
+
+        <form action="AddGas?AutoID=@Request.QueryString["AutoID"]" method="post" name="AddGas" id="AddGas">
+            <input id="txtAutoNumber" name="txtAutoNumber" hidden="hidden" type="text" value="@Request.QueryString["AutoID"]" /> 
+            Miles: <input id="txtMiles" name="txtMiles" type="text" type="number" /><br />
+            Gallons: <input id="txtGallons" name="txtGallons" type="text" type="number" /><br />
+            Total Price: <input id="txtPrice" name="txtPrice" type="text" type="number" /><br />
+            <input id="Submit1" type="submit" value="submit" />
+        </form>
+        <br />
+        <br />
+        View <a href="~/Home/DisplayAuto?AutoID=@Request.QueryString["AutoID"]">Miles</a> - <a href="~/Home/DisplayAuto">Auto</a>
+
+    </div>
+</body>
+</html>

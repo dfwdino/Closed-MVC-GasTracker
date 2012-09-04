@@ -5,6 +5,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
+
+
 namespace mvc_MilesTracker.Models
 {
     public abstract class ASQLFunctions
@@ -59,7 +61,7 @@ namespace mvc_MilesTracker.Models
             myCommand = new SqlDataAdapter("SELECT Gas.Miles,Gas.Gallons,Gas.Price,Auto.AutoName " + 
                                             "FROM [Gas].[dbo].[Gas] " + 
                                             "inner join Auto " +
-                                            "on Auto.AutoNumber = Gas.AutoNumber where'" + AutoID + "' order by Miles", myConnection);
+                                            "on Auto.AutoNumber = Gas.AutoNumber where Gas.AutoNumber = '" + AutoID + "' order by Gas.Miles", myConnection);
 
             ds = new DataSet();
 
@@ -73,12 +75,38 @@ namespace mvc_MilesTracker.Models
                 {
                     AutoName = item["AutoName"].ToString(),
                     Miles = (int)item["Miles"],
-                    Gallons = (float)item["Gallons"],
-                    Price = (double)item["Price"]
+                    Gallons = (double)item["Gallons"],
+                    Price = (decimal)item["Price"]
                 });
             }
 
             return GasList;
+        }
+
+        public void AddGas(string AutoNumber, string Miles, string Price, string Gallons)
+        {
+            SqlConnection myConnection;
+            SqlCommand myCommand;
+
+            myConnection = new SqlConnection(@"server=MASOCHIST\MASOCHISTSQL;database=Gas;User Id=Bills;Password=Bills");
+
+            if (Price.Length.Equals(0))
+                Price = "0.0";
+            
+
+            string SQLInsertNewGas = "INSERT INTO Gas ([AutoNumber],[Miles],[Price],[Gallons]) VALUES ('{0}','{1}',{2},{3})";
+
+            string insertbill = string.Format(SQLInsertNewGas, AutoNumber,Miles,Price,Gallons);
+            
+
+            // Connect to the SQL database using a SQL SELECT query to get 
+            // all the data from the "Titles" table.
+            myCommand = new SqlCommand(insertbill, myConnection);
+
+            myConnection.Open();
+
+            myCommand.ExecuteNonQuery();
+
         }
 
     }

@@ -15,8 +15,10 @@
     <div>
     @foreach (mvc_MilesTracker.Models.Auto item in ViewData.Model)
     {
-        @item.AutoName <br />
+        <span><a href="~/Home/DisplayGas?AutoID=@item.AutoNumber">@item.AutoName</a> <a href="~/Home/AddGas?AutoID=@item.AutoNumber">Add</a> Miles<br /></span>
     }
     </div>
+    <br />
+    Add New Auto
 </body>
 </html>

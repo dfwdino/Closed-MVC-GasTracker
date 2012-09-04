@@ -1,4 +1,4 @@
-﻿@model mvc_MilesTracker.Models.Gas
+﻿@model IEnumerable<mvc_MilesTracker.Models.Gas>
 
 @{
     Layout = null;
@@ -14,6 +14,15 @@
 <body>
     <div>
         
+        <h1> </h1>
+
+        @foreach (mvc_MilesTracker.Models.Gas item in Model)
+        {
+            <span>Miles: @item.Miles Gallons: @item.Gallons</span><br />
+        }
+        <br />
+        <a href="~/Home/DisplayAuto">Back To Auto.</a>
+
     </div>
 </body>
 </html>

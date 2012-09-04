@@ -29,9 +29,30 @@ namespace mvc_MilesTracker.Controllers
         {
             mvc_MilesTracker.Models.SQLFunctions HelperSQL = new SQLFunctions();
 
+
             //Should be a better way in passing values???
-            ViewData.Model = HelperSQL.GetMilesForAuto();
+            ViewData.Model = HelperSQL.GetMilesForAuto(Request.QueryString["AutoID"]);
             return View();
+
+
+        }
+
+        public ActionResult AddGas()
+        {
+            if (Request.Form.Keys.Count.Equals(0))
+            {
+                return View();
+            }
+            else
+            {
+                mvc_MilesTracker.Models.SQLFunctions HelperSQL = new SQLFunctions();
+
+                HelperSQL.AddGas(Request.Form["txtAutoNumber"], Request.Form["txtMiles"], Request.Form["txtPrice"], Request.Form["txtGallons"]);
+
+                ViewBag.Model = "Miles Added.";
+
+                return View();
+            }
         }
 
         
