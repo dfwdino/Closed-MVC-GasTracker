@@ -13,12 +13,23 @@
 </head>
 <body>
     <div>
+        <table border="1">
+            <tr>
+                <td>Name</td>
+                <td>Miles</td>
+            </tr>
+
     @foreach (mvc_MilesTracker.Models.Auto item in ViewData.Model)
     {
-        <span><a href="~/Home/DisplayGas?AutoID=@item.AutoNumber">@item.AutoName</a> <a href="~/Home/AddGas?AutoID=@item.AutoNumber">Add</a> Miles<br /></span>
+        <tr>
+            <td><a href="~/Home/DisplayGas?AutoID=@item.AutoNumber">@item.AutoName</a></td>
+            <td><a href="~/Home/AddGas?AutoID=@item.AutoNumber">Add</a></td>
+        </tr>
+         
     }
-    </div>
+        </table>
+   </div>
     <br />
-    Add New Auto
+    <a href="~/Home/AddAuto">Add</a> New Auto
 </body>
 </html>

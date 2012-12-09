@@ -4,26 +4,25 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-
+using System.Configuration;
 
 
 namespace mvc_MilesTracker.Models
 {
-    public abstract class ASQLFunctions
+    public abstract class ASQLFunctions : IDisposable
     {
+        private SqlConnection myConnection;
+        private SqlDataAdapter myCommand;
+
+        public ASQLFunctions()
+        {
+            myConnection = new SqlConnection(Properties.Settings.Default.SQLServer);
+        }
+
 
         public IList<Models.Auto> GetAllAutos()
         {
-
-            SqlConnection myConnection;
-            SqlDataAdapter myCommand;
-
             DataSet ds = new DataSet();
-
-            //var currentSession = HttpContext.Current.Session;
-            //string myValue = currentSession["SQLInfo"].ToString();
-            //myConnection = new SqlConnection(myValue);
-            myConnection = new SqlConnection(@"server=MASOCHIST\MASOCHISTSQL;database=Gas;User Id=Bills;Password=Bills");
 
             myCommand = new SqlDataAdapter("Select * from Auto", myConnection);
 
@@ -42,21 +41,16 @@ namespace mvc_MilesTracker.Models
                 });
             }
 
+            ds.Dispose();
+            ds = null;
+
             return AutoList;
         }
 
         public IList<Models.Gas> GetMilesForAuto(string AutoID)
         {
-
-            SqlConnection myConnection;
-            SqlDataAdapter myCommand;
-
+            
             DataSet ds = new DataSet();
-
-            //var currentSession = HttpContext.Current.Session;
-            //string myValue = currentSession["SQLInfo"].ToString();
-            //myConnection = new SqlConnection(myValue);
-            myConnection = new SqlConnection(@"server=MASOCHIST\MASOCHISTSQL;database=Gas;User Id=Bills;Password=Bills");
 
             myCommand = new SqlDataAdapter("SELECT Gas.Miles,Gas.Gallons,Gas.Price,Auto.AutoName " + 
                                             "FROM [Gas].[dbo].[Gas] " + 
@@ -80,27 +74,20 @@ namespace mvc_MilesTracker.Models
                 });
             }
 
+            ds.Dispose();
+            ds = null;
+            
             return GasList;
         }
 
-        public void AddGas(string AutoNumber, string Miles, string Price, string Gallons)
+        public void AddAuto(string AutoName)
         {
-            SqlConnection myConnection;
             SqlCommand myCommand;
 
-            myConnection = new SqlConnection(@"server=MASOCHIST\MASOCHISTSQL;database=Gas;User Id=Bills;Password=Bills");
+            string SQLInsertNewAuto = "INSERT INTO Auto ([AutoName]) VALUES ('{0}')";
 
-            if (Price.Length.Equals(0))
-                Price = "0.0";
-            
+            string insertbill = string.Format(SQLInsertNewAuto, AutoName);
 
-            string SQLInsertNewGas = "INSERT INTO Gas ([AutoNumber],[Miles],[Price],[Gallons]) VALUES ('{0}','{1}',{2},{3})";
-
-            string insertbill = string.Format(SQLInsertNewGas, AutoNumber,Miles,Price,Gallons);
-            
-
-            // Connect to the SQL database using a SQL SELECT query to get 
-            // all the data from the "Titles" table.
             myCommand = new SqlCommand(insertbill, myConnection);
 
             myConnection.Open();
@@ -109,5 +96,36 @@ namespace mvc_MilesTracker.Models
 
         }
 
+
+        public void AddGas(string AutoNumber, string Miles, string Price, string Gallons)
+        {
+            SqlCommand myCommand;
+
+            if (Price.Length.Equals(0))
+                Price = "0.0";
+            
+
+            string SQLInsertNewGas = "INSERT INTO Gas ([AutoNumber],[Miles],[Price],[Gallons]) VALUES ('{0}','{1}',{2},{3})";
+
+            string insertbill = string.Format(SQLInsertNewGas, AutoNumber,Miles,Price,Gallons);
+                       
+            myCommand = new SqlCommand(insertbill, myConnection);
+
+            myConnection.Open();
+
+            myCommand.ExecuteNonQuery();
+
+        }
+
+
+        public void Dispose()
+        {
+            myConnection.Close();
+            
+            myCommand.Dispose();
+            myConnection.Dispose();
+        }
+
+      
     }
 }

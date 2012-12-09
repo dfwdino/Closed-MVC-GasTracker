@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "AddItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AddItem</h2>
+@if (Request.Form.AllKeys.Contains("Item"))
+{
+<div>
+    Store <b>@Request.Form.GetValues("Item")[0]</b> was added.<br />
+</div>
+}
+
+
+<form action="AddItem" method="post">
+    Item Name: <input type="text" name="Item" value="" /><br />
+    Store: <select name="Store">
+        <option value="">Pick a Store</option>
+            @if(Model!=null)
+            {
+                foreach (System.Data.DataRow item in Model.Rows)
+                {
+                    object Name = item["Name"];
+                    object IndexNumber = item["IndexNumber"];
+                    <option value="@Name">@Name</option>
+                }
+                }
+    </select>
+    <br />
+    Price: <input type="text" name="Price" value="" /><br /><br />
+    <input id="Submit1" type="submit" value="Add Item" />
+
+</form>

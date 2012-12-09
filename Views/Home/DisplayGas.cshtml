@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>DisplayGas</title>
+    <title>Display Gas</title>
 </head>
 <body>
     <div>
@@ -18,7 +18,17 @@
         @{double TotalGallons = 0.0;
           int StartMiles = 0;
           int FinishMiles = 0;
-          double AvgMiles = 0;}
+          double AvgMiles = 0;
+          int LastMiles = 0;}
+
+        <table border="1">
+            <tr>
+                <td style="text-align:center"><b>Miles</b></td>
+                <td style="text-align:center"><b>Gallons</b></td>
+                <td style="text-align:center"><b>MPG</b></td>
+            </tr>
+        
+
         @foreach (mvc_MilesTracker.Models.Gas item in Model)
         {
         
@@ -29,9 +39,27 @@
             
             FinishMiles = @item.Miles;
             
-            //Should be table.
-            <span>Miles: @item.Miles Gallons: @item.Gallons</span><br />
+		                 
+            <tr>
+                <td>@item.Miles</td>
+                <td>@item.Gallons</td>
+                @{if (TotalGallons.Equals(0))
+	                {
+                        <td> - </td>  
+	                }
+                    else
+                    {
+                        double tempmpg = (@item.Miles - LastMiles)/item.Gallons;
+                      <td>@tempmpg.ToString().Substring(0,6)</td>
+                    }
+                    LastMiles = @item.Miles;
+                  }
+                
+            </tr>
+
         }
+
+        </table>
         <br />
         @{
             AvgMiles = (FinishMiles - StartMiles) / TotalGallons;
@@ -39,7 +67,8 @@
             
         }
         
-        <div>Total Gallons: @TotalGallons Avg MPG's @AvgMiles</div>
+        <div><b>Total Gallons:</b> @TotalGallons <BR /> <b>Avg MPG's:</b> @AvgMiles.ToString().Substring(0,6)</div>
+        <br />
         <a href="~/Home/DisplayAuto">Back</a> To Auto.
 
     </div>

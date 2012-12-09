@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+    <table>
+        <tr style="font-weight:bold;text-align:center">
+            <td>Item</td>
+            <td>Store</td>
+            <td>Price</td>
+        </tr>
+    @if(Model!=null)
+    {
+        foreach (System.Data.DataRow item in Model.Rows)
+        {
+            object ID = item["IndexNumber"];
+        
+        <tr style="text-align:center">
+            @if (item["GotItem"].Equals(true))
+            {
+            <td><del><a href="~/Default/Index?ID=@ID&GotItem=0">@item["item"].ToString()</a></del></td>
+            }
+            else
+            {   <td><a href="~/Default/Index?ID=@ID&GotItem=1">@item["item"].ToString()</a></td>
+            }
+            <td>@item["Store"].ToString()</td>
+            <td>$@item["Price"].ToString()</td>
+            <td> </td>
+            <td><a href="~/Default/DeleteItem?ID=@ID">Delete Item</a></td>
+            
+        </tr>     
+    }    
+        }
+    
+
+</table>
+<br />  
+View <a href="~/Default/Index?View=All">All</a> Items

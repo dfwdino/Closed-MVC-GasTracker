@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("mvc_MilesTracker")]
+[assembly: AssemblyTitle("Grocery_List")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("mvc_MilesTracker")]
+[assembly: AssemblyProduct("Grocery_List")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3dfa5740-7b0c-4c08-a374-b70a639e1db2")]
+[assembly: Guid("0b62feca-734a-4af7-8921-3ee3da55cc32")]
 
 // Version information for an assembly consists of the following four values:
 //

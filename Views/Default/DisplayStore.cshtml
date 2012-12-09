@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "DisplayStore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DisplayStore</h2>
+
+
+       
+@if(Model.Rows.Count > 0)
+{
+    <table>
+     <tr style="font-weight:bold;text-align:center">
+            <td>Name</td>
+        </tr>
+    @foreach (System.Data.DataRow item in Model.Rows)
+        {
+            object ID = item["IndexNumber"];
+        
+        <tr style="text-align:center">
+            <td>@item["Name"].ToString()</td>
+            <td> </td>
+            <td><a href="~/Default/DeleteStore?ID=@ID">Delete</a></td>
+            
+        </tr>     
+         
+        }
+        </table>
+    }
+
+    else
+    {<div>No stores found.</div>}
+    

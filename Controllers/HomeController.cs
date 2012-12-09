@@ -55,6 +55,25 @@ namespace mvc_MilesTracker.Controllers
             }
         }
 
+        public ActionResult AddAuto()
+        {
+            if (Request.Form.Keys.Count.Equals(0))
+            {
+                return View();
+            }
+            else
+            {
+                mvc_MilesTracker.Models.SQLFunctions HelperSQL = new SQLFunctions();
+
+                HelperSQL.AddAuto(Request.Form["txtAutoName"]);
+
+                ViewBag.Model = "Auto " + Request.Form["txtAutoName"] + " Added";
+
+                return View();
+            }
+
+        }
+
         
 
     }

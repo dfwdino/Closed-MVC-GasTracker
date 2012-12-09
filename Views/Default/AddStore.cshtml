@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "AddStore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AddStore</h2>
+
+@if(Request.Form.AllKeys.Contains("Name"))
+{
+<div>
+    Store <b>@Request.Form.GetValues("Name")[0]</b> was added.<br />
+</div><br />
+}
+
+<form action="AddStore" method="post">
+    Store Name: <input type="text" name="Name" value="" /><br /><br />
+    <input id="Submit1" type="submit" value="Add Store" />
+
+</form>

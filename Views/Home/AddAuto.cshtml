@@ -1,0 +1,14 @@
+﻿@model mvc_MilesTracker.Models.Auto
+
+@{
+    ViewBag.Title = "Add Auto";
+}
+
+<h2>AddAuto</h2>
+<br /><br />
+ <label id="RetrunValue" name="RetrunValue">@ViewBag.Model</label> <br /><br />
+
+<form action="~/Home/AddAuto" method="post">
+Auto Name: <input id="txtAutoName" name="txtAutoName" type="text" />
+<input id="Submit1" type="submit" value="submit" />
+    </form>
